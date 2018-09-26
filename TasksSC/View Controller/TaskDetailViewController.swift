@@ -9,6 +9,11 @@
 import UIKit
 
 class TaskDetailViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    var taskController: TaskController?
+    var task: Task?
 
     // MARK: - Outlets
     

@@ -16,11 +16,11 @@ class CoreDataStack {
     lazy var container: NSPersistentContainer = {
         
         let container = NSPersistentContainer(name: "TasksSC") // Needs to match up with data model file name
-        container.loadPersistentStores(completionHandler: { (_, error) in
+        container.loadPersistentStores { (_, error) in
             if let error = error {
                 fatalError("Failed to load persistenet stores: \(error)")
             }
-        })
+        }
         return container
     }()
     

@@ -42,6 +42,10 @@ class TaskController {
     var tasks: [Task] {
         
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        let descriptor = NSSortDescriptor(key: "name", ascending: false)
+        
+        fetchRequest.sortDescriptors = [descriptor]
+        
         let moc = CoreDataStack.shared.mainContext
         
         do {

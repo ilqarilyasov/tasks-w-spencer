@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 class TaskController {
     
@@ -38,7 +39,16 @@ class TaskController {
         }
     }
     
-    
-    
-    
+    var tasks: [Task] {
+        
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        let moc = CoreDataStack.shared.mainContext
+        
+        do {
+           return try moc.fetch(fetchRequest)
+        } catch {
+            NSLog("Error fetching task: \(error)")
+            return []
+        }
+    }
 }

@@ -34,6 +34,9 @@ class TaskController {
     }
     
     func deleteTask(task: Task) {
+        
+        deleteTaskFromServer(task: task)
+        
         CoreDataStack.shared.mainContext.delete(task)
         
         saveToPersistentStore()
@@ -127,9 +130,7 @@ extension TaskController {
     func put(task: Task, compeltion: @escaping CompletionHandler = { _ in }) {
         
         let identifier = task.identifier ?? UUID()
-        
         let requestURL = TaskController.baseURL.appendingPathComponent(identifier.uuidString).appendingPathExtension("json")
-        
         var request = URLRequest(url: requestURL)
         request.httpMethod = "PUT"
         
@@ -157,6 +158,26 @@ extension TaskController {
                 return
             }
             compeltion(nil)
+        }.resume()
+    }
+    
+    // MARK: - Delete
+    
+    func deleteTaskFromServer(task: Task, completion: @escaping CompletionHandler = { _ in }) {
+        
+        guard let identifier = task.identifier else {
+            NSLog("No identifier for task to delete")
+            completion(NSError())
+            return
+        }
+        
+        let requestURL = TaskController.baseURL.appendingPathComponent(identifier.uuidString).appendingPathExtension("json")
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            print(response!)
+            completion(error)
         }.resume()
     }
 }

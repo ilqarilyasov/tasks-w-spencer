@@ -25,7 +25,6 @@ extension Task {
     
     convenience init(name: String,
                      notes: String?,
-                     timestamp: Date = Date(),
                      priority: TaskPriority = .normal,
                      identifier: UUID = UUID(),
                      context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
@@ -34,36 +33,31 @@ extension Task {
         
         self.name = name
         self.notes = notes
-        self.timestamp = timestamp
         self.priority = priority.rawValue
         self.identifier = identifier
     }
     
     // Failable initializer. Put ? after init
-    convenience init?(taskRepresentation: TaskRepresentation,
+    convenience init?(taskRepresentation tr: TaskRepresentation,
                      context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         
-        guard let identifier = UUID(uuidString: taskRepresentation.identifier),
-            let priority = TaskPriority(rawValue: taskRepresentation.priority) else {return nil}
+        guard let identifier = UUID(uuidString: tr.identifier),
+            let priority = TaskPriority(rawValue: tr.priority) else {return nil}
         
-        self.init(name: taskRepresentation.name,
-                  notes: taskRepresentation.notes,
-                  timestamp: taskRepresentation.timestamp,
+        self.init(name: tr.name,
+                  notes: tr.notes,
                   priority: priority,
-                  identifier: identifier,
-                  context: context)
+                  identifier: identifier)
     }
     
     var taskRespresentation: TaskRepresentation? {
         
         guard let name = name,
-            let timestamp = timestamp,
             let priority = priority,
             let identifier = identifier else {return nil}
         
         return TaskRepresentation(name: name,
                                   notes: notes,
-                                  timestamp: timestamp,
                                   priority: priority,
                                   identifier: identifier.uuidString)
     }

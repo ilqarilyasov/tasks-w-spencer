@@ -23,7 +23,12 @@ enum TaskPriority: String {
 
 extension Task {
     
-    convenience init(name: String, notes: String?, timestamp: Date = Date(), priority: TaskPriority = .normal, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+    convenience init(name: String,
+                     notes: String?,
+                     timestamp: Date = Date(),
+                     priority: TaskPriority = .normal,
+                     identifier: UUID = UUID(),
+                     context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
         
         self.init(context: context)
         
@@ -31,5 +36,16 @@ extension Task {
         self.notes = notes
         self.timestamp = timestamp
         self.priority = priority.rawValue
+        self.identifier = identifier
+    }
+    
+    var taskRespresentation: TaskRepresentation? {
+        
+        guard let name = name,
+            let timestamp = timestamp,
+            let priority = priority,
+            let identifier = identifier else {return nil}
+        
+        return TaskRepresentation(name: name, notes: notes, timestamp: timestamp, priority: priority, identifier: identifier.uuidString)
     }
 }

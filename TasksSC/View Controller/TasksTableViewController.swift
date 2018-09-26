@@ -32,8 +32,9 @@ class TasksTableViewController: UITableViewController, NSFetchedResultsControlle
     lazy var fetchedResultsController: NSFetchedResultsController<Task> = {
         
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
+        let sortDescriptor2 = NSSortDescriptor(key: "name", ascending: true)
+        let sortDescriptor3 = NSSortDescriptor(key: "priority", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor2, sortDescriptor3]
         
         let moc = CoreDataStack.shared.mainContext
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: "priority", cacheName: nil)
@@ -64,11 +65,15 @@ class TasksTableViewController: UITableViewController, NSFetchedResultsControlle
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sectionInfo = fetchedResultsController.sections?[section]
+        return sectionInfo?.name.capitalized
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let task = fetchedResultsController.object(at: indexPath)
             taskController.deleteTask(task: task)
-            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 

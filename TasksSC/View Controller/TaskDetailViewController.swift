@@ -50,14 +50,16 @@ class TaskDetailViewController: UIViewController {
     // MARK: - Update views
     
     func updateViews() {
-        guard let task = task, isViewLoaded else {return}
+        guard isViewLoaded else {return}
         
-        nameTextField.text = task.name
-        notesTextView.text = task.notes
+        title = task?.name ?? "Create Task"
+        
+        nameTextField.text = task?.name
+        notesTextView.text = task?.notes
         
         let priority: TaskPriority
         
-        if let taskPriority = task.priority {
+        if let taskPriority = task?.priority {
             priority = TaskPriority(rawValue: taskPriority) ?? .normal
         } else {
             priority = .normal

@@ -17,6 +17,7 @@
 		8288378D215B21BE000D4BCA /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8288378C215B21BE000D4BCA /* TaskController.swift */; };
 		82883791215B22F5000D4BCA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82883790215B22F5000D4BCA /* CoreDataStack.swift */; };
 		82883793215B252A000D4BCA /* Task+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82883792215B252A000D4BCA /* Task+Convenience.swift */; };
+		828D7645215C181F003064F2 /* TaskRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828D7644215C181F003064F2 /* TaskRepresentation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,8 @@
 		82883790215B22F5000D4BCA /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		82883792215B252A000D4BCA /* Task+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Convenience.swift"; sourceTree = "<group>"; };
 		828D7643215BE7E4003064F2 /* TasksSC 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TasksSC 2.xcdatamodel"; sourceTree = "<group>"; };
+		828D7644215C181F003064F2 /* TaskRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepresentation.swift; sourceTree = "<group>"; };
+		828D7646215C18ED003064F2 /* TasksSC 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "TasksSC 3.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +111,7 @@
 				82883789215B20DA000D4BCA /* TasksSC.xcdatamodeld */,
 				82883790215B22F5000D4BCA /* CoreDataStack.swift */,
 				82883792215B252A000D4BCA /* Task+Convenience.swift */,
+				828D7644215C181F003064F2 /* TaskRepresentation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -192,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8288378B215B20DA000D4BCA /* TasksSC.xcdatamodeld in Sources */,
+				828D7645215C181F003064F2 /* TaskRepresentation.swift in Sources */,
 				82883784215B1F1C000D4BCA /* TaskDetailViewController.swift in Sources */,
 				82883786215B1F2B000D4BCA /* TasksTableViewController.swift in Sources */,
 				82883793215B252A000D4BCA /* Task+Convenience.swift in Sources */,
@@ -400,10 +405,11 @@
 		82883789215B20DA000D4BCA /* TasksSC.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				828D7646215C18ED003064F2 /* TasksSC 3.xcdatamodel */,
 				828D7643215BE7E4003064F2 /* TasksSC 2.xcdatamodel */,
 				8288378A215B20DA000D4BCA /* TasksSC.xcdatamodel */,
 			);
-			currentVersion = 828D7643215BE7E4003064F2 /* TasksSC 2.xcdatamodel */;
+			currentVersion = 828D7646215C18ED003064F2 /* TasksSC 3.xcdatamodel */;
 			path = TasksSC.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

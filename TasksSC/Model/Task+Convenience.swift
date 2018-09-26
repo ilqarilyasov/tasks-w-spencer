@@ -32,6 +32,4 @@ extension Task {
         self.timestamp = timestamp
         self.priority = priority.rawValue
     }
-    
-    
 }

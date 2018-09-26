@@ -403,7 +403,7 @@
 				828D7643215BE7E4003064F2 /* TasksSC 2.xcdatamodel */,
 				8288378A215B20DA000D4BCA /* TasksSC.xcdatamodel */,
 			);
-			currentVersion = 8288378A215B20DA000D4BCA /* TasksSC.xcdatamodel */;
+			currentVersion = 828D7643215BE7E4003064F2 /* TasksSC 2.xcdatamodel */;
 			path = TasksSC.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

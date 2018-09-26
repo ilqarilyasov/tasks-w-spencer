@@ -43,7 +43,8 @@ class TaskController {
         
         let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
         let descriptor = NSSortDescriptor(key: "name", ascending: false)
-        
+        //fetchRequest.predicate = NSPredicate(format: "notes CONTAINS %@", "a")
+        //fetchRequest.predicate = NSPredicate(format: "timestamp < %@", Date() as NSDate)
         fetchRequest.sortDescriptors = [descriptor]
         
         let moc = CoreDataStack.shared.mainContext

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreData
 
-class TasksTableViewController: UITableViewController {
+class TasksTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     // MARK: - Properties
     
@@ -71,4 +72,20 @@ class TasksTableViewController: UITableViewController {
             destVC.taskController = taskController
         }
     }
+    
+    // MARK: Fetched Results Controller
+    
+    var lazy fetchedResultsController: NSFetchedResultsController<Task> = {
+        
+        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        let moc = CoreDataStack.shared.mainContext
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: "priority", cacheName: nil)
+        
+        frc.delegate = self
+        try! frc.performFetch()
+        return frc
+    }()
 }

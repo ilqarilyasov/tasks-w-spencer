@@ -43,3 +43,47 @@ class TaskController {
         }
     }
 }
+
+    // MARK: Extension
+
+extension TaskController {
+    
+    static let baseURL = URL(string: "https://tasks-3f211.firebaseio.com/")!
+    typealias CompletionHandler = (Error?) -> Void
+    
+    func fetchTasksFromServer(completion: @escaping CompletionHandler = { _ in }) {
+        
+        let requestURL = TaskController.baseURL.appendingPathExtension("json")
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            
+            if let error = error {
+                NSLog("Error fetching tasks: \(error)")
+                completion(error)
+                return
+            }
+            
+            guard let data = data else {
+                NSLog("No data return from data task")
+                completion(error)
+                return
+            }
+            
+            do {
+                let tasRepresentations = try JSONDecoder().decode([String: TaskRepresentation].self, from: data).map({ $0.value })
+                
+                for taskRep in tasRepresentations {
+                    let _ = Task(taskRepresentation: taskRep)
+                }
+                
+                self.saveToPersistentStore()
+                completion(nil)
+            } catch {
+                NSLog("Error decoding task representations: \(error)")
+                completion(error)
+                return
+            }
+            
+        }.resume()
+    }
+}

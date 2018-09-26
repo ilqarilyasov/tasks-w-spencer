@@ -39,6 +39,21 @@ extension Task {
         self.identifier = identifier
     }
     
+    // Failable initializer. Put ? after init
+    convenience init?(taskRepresentation: TaskRepresentation,
+                     context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+        
+        guard let identifier = UUID(uuidString: taskRepresentation.identifier),
+            let priority = TaskPriority(rawValue: taskRepresentation.priority) else {return nil}
+        
+        self.init(name: taskRepresentation.name,
+                  notes: taskRepresentation.notes,
+                  timestamp: taskRepresentation.timestamp,
+                  priority: priority,
+                  identifier: identifier,
+                  context: context)
+    }
+    
     var taskRespresentation: TaskRepresentation? {
         
         guard let name = name,
@@ -46,6 +61,10 @@ extension Task {
             let priority = priority,
             let identifier = identifier else {return nil}
         
-        return TaskRepresentation(name: name, notes: notes, timestamp: timestamp, priority: priority, identifier: identifier.uuidString)
+        return TaskRepresentation(name: name,
+                                  notes: notes,
+                                  timestamp: timestamp,
+                                  priority: priority,
+                                  identifier: identifier.uuidString)
     }
 }

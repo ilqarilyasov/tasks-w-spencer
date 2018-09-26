@@ -16,6 +16,7 @@
 		8288378B215B20DA000D4BCA /* TasksSC.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 82883789215B20DA000D4BCA /* TasksSC.xcdatamodeld */; };
 		8288378D215B21BE000D4BCA /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8288378C215B21BE000D4BCA /* TaskController.swift */; };
 		82883791215B22F5000D4BCA /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82883790215B22F5000D4BCA /* CoreDataStack.swift */; };
+		82883793215B252A000D4BCA /* Task+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82883792215B252A000D4BCA /* Task+Convenience.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		8288378A215B20DA000D4BCA /* TasksSC.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TasksSC.xcdatamodel; sourceTree = "<group>"; };
 		8288378C215B21BE000D4BCA /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
 		82883790215B22F5000D4BCA /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		82883792215B252A000D4BCA /* Task+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Task+Convenience.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				82883789215B20DA000D4BCA /* TasksSC.xcdatamodeld */,
 				82883790215B22F5000D4BCA /* CoreDataStack.swift */,
+				82883792215B252A000D4BCA /* Task+Convenience.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				8288378B215B20DA000D4BCA /* TasksSC.xcdatamodeld in Sources */,
 				82883784215B1F1C000D4BCA /* TaskDetailViewController.swift in Sources */,
 				82883786215B1F2B000D4BCA /* TasksTableViewController.swift in Sources */,
+				82883793215B252A000D4BCA /* Task+Convenience.swift in Sources */,
 				82883791215B22F5000D4BCA /* CoreDataStack.swift in Sources */,
 				8288378D215B21BE000D4BCA /* TaskController.swift in Sources */,
 				82883771215B1C5D000D4BCA /* AppDelegate.swift in Sources */,

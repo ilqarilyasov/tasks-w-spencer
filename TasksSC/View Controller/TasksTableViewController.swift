@@ -13,10 +13,17 @@ class TasksTableViewController: UITableViewController {
     // MARK: - Properties
     
     let taskController = TaskController()
+    
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -36,7 +43,8 @@ class TasksTableViewController: UITableViewController {
     }
 
 
-    // Override to support editing the table view.
+    // MARK: - Override to support editing the table view
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let task = taskController.tasks[indexPath.row]
@@ -45,6 +53,7 @@ class TasksTableViewController: UITableViewController {
         }
     }
 
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

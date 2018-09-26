@@ -72,32 +72,58 @@
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyO-cg-NeK">
-                                                <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="57" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9bP-ND-5gF">
-                                                <rect key="frame" x="54" y="0.0" width="289" height="30"/>
+                                                <rect key="frame" x="65" y="0.0" width="278" height="30"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ra2-84-jD9">
+                                        <rect key="frame" x="0.0" y="38" width="343" height="28"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Priority" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wkn-tB-9xz">
+                                                <rect key="frame" x="0.0" y="0.0" width="57" height="28"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Aqy-Vw-iKV">
+                                                <rect key="frame" x="65" y="0.0" width="278" height="29"/>
+                                                <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <segments>
+                                                    <segment title="low"/>
+                                                    <segment title="normal"/>
+                                                    <segment title="high"/>
+                                                    <segment title="critical"/>
+                                                </segments>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pXd-mW-sR6">
-                                        <rect key="frame" x="0.0" y="38" width="343" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="74" width="343" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Xrw-WB-e5d">
-                                        <rect key="frame" x="0.0" y="66.5" width="343" height="452.5"/>
+                                        <rect key="frame" x="0.0" y="102.5" width="343" height="416.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="wkn-tB-9xz" firstAttribute="leading" secondItem="dyO-cg-NeK" secondAttribute="leading" id="nDy-xZ-AFf"/>
+                                    <constraint firstItem="pXd-mW-sR6" firstAttribute="leading" secondItem="dyO-cg-NeK" secondAttribute="leading" id="siZ-6E-0ar"/>
+                                    <constraint firstItem="wkn-tB-9xz" firstAttribute="trailing" secondItem="dyO-cg-NeK" secondAttribute="trailing" id="zAP-GR-PSR"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.91636262690000003" green="0.91636262690000003" blue="0.91636262690000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -119,6 +145,7 @@
                     <connections>
                         <outlet property="nameTextField" destination="9bP-ND-5gF" id="8cE-OW-gzS"/>
                         <outlet property="notesTextView" destination="Xrw-WB-e5d" id="SPp-Qt-yJQ"/>
+                        <outlet property="priorityControl" destination="Aqy-Vw-iKV" id="LPO-23-jVN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vf9-2X-MBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -145,6 +172,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="86G-IX-7JA"/>
+        <segue reference="U5k-F2-D8l"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -17,10 +17,15 @@ class TaskController {
     
     // MARK: - CRUD
     
-    func createTask(with name: String, notes: String?, priority: TaskPriority) {
-        let task = Task(name: name, notes: notes, priority: priority)
+    func createTask(with name: String, notes: String?, priority: TaskPriority, context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
+        let task = Task(name: name, notes: notes, priority: priority, context: context)
         
-        saveToPersistentStore()
+        do {
+            try CoreDataStack.shared.save(context: context)
+        } catch {
+            NSLog("Error saving task: \(error)")
+        }
+        
         put(task: task)
     }
     
@@ -29,33 +34,32 @@ class TaskController {
         task.notes = notes
         task.priority = priority.rawValue
         
-        saveToPersistentStore()
         put(task: task)
+//
+//        guard let context = task.managedObjectContext else {return}
+//        do {
+//            try CoreDataStack.shared.save(context: context)
+//        } catch {
+//            NSLog("Error updating task: \(error)")
+//        }
     }
     
     func deleteTask(task: Task) {
-        
+        let moc = CoreDataStack.shared.mainContext
         deleteTaskFromServer(task: task)
+        moc.delete(task)
         
-        CoreDataStack.shared.mainContext.delete(task)
-        
-        saveToPersistentStore()
-    }
-    
-    // MARK: - Persistent
-    
-    func saveToPersistentStore() {
         do {
-            try CoreDataStack.shared.mainContext.save()
+            try CoreDataStack.shared.save(context: moc)
         } catch {
-            NSLog("Error saving moc: \(error)")
+            moc.reset() // Clear out the context, so there is nothing in it
+            NSLog("Error saving moc after deleting task: \(error)")
         }
     }
     
-    
     // MARK: - Find task by identifier
     
-    func task(for identifier: String) -> Task? {
+    func task(for identifier: String, in context: NSManagedObjectContext) -> Task? {
         
         guard let id = UUID(uuidString: identifier) else {return nil}
         
@@ -63,24 +67,25 @@ class TaskController {
         let predicate = NSPredicate(format: "identifier == %@", id as NSUUID)
         fetchRequest.predicate = predicate
         
-        do {
-            let moc = CoreDataStack.shared.mainContext
-            return try moc.fetch(fetchRequest).first
-        } catch {
-            NSLog("Error fetching task with UUID: \(identifier) :\(error)")
-            return nil
+        var result: Task? = nil
+        
+        context.performAndWait {
+            do {
+                result =  try context.fetch(fetchRequest).first
+            } catch {
+                NSLog("Error fetching task with UUID: \(identifier) :\(error)")
+            }
         }
+        return result
     }
 }
-
-    // MARK: - Extension
 
 extension TaskController {
     
     static let baseURL = URL(string: "https://tasks-3f211.firebaseio.com/")!
     typealias CompletionHandler = (Error?) -> Void
     
-    // MARK: - Fetch
+    // MARK: - Fetch from Server - Needs a BACKGROUND CONTEXT
     
     func fetchTasksFromServer(completion: @escaping CompletionHandler = { _ in }) {
         
@@ -103,18 +108,28 @@ extension TaskController {
             do {
                 let tasRepresentations = try JSONDecoder().decode([String: TaskRepresentation].self, from: data).map({ $0.value })
                 
-                for taskRep in tasRepresentations {
-                    
-                    guard let priority = TaskPriority(rawValue: taskRep.priority) else {return}
-                    
-                    if let task = self.task(for: taskRep.identifier) {
-                        self.updateTask(task: task, name: taskRep.name, notes: taskRep.notes, priority: priority)
-                    } else {
-                        let _ = Task(taskRepresentation: taskRep)
+                // MARK: Creata a background context
+                let backgroundContext = CoreDataStack.shared.container.newBackgroundContext()
+                backgroundContext.performAndWait {
+                    for taskRep in tasRepresentations {
+                        
+                        guard let priority = TaskPriority(rawValue: taskRep.priority) else {return}
+                        
+                        if let task = self.task(for: taskRep.identifier, in: backgroundContext) {
+                            self.updateTask(task: task, name: taskRep.name, notes: taskRep.notes, priority: priority)
+                        } else {
+                            let _ = Task(taskRepresentation: taskRep, context: backgroundContext)
+                        }
                     }
+                    
+                    // Save background context
+                    do {
+                        try CoreDataStack.shared.save(context: backgroundContext)
+                    } catch {
+                        NSLog("Error saving background context: \(error)")
+                    }
+                    
                 }
-                
-                self.saveToPersistentStore()
                 completion(nil)
             } catch {
                 NSLog("Error decoding task representations: \(error)")
@@ -142,7 +157,8 @@ extension TaskController {
             
             taskRepresentation.identifier = identifier.uuidString
             task.identifier = identifier
-            self.saveToPersistentStore()
+            
+            try CoreDataStack.shared.save()
             
             request.httpBody = try JSONEncoder().encode(taskRepresentation)
         } catch {
